@@ -1,0 +1,53 @@
+<div class="col-sm-6 col-xl-6">
+    <div class="bg-transprant rounded h-100 p-4">
+        <h6 class="mb-4">Edit Products</h6>
+        <form method="post" action="/admin/updateProduct?id={{id}}"  enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+                <input type="name" name="name" class="form-control" value="{{name}}"  >
+                <label for="floatingInput">Product Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="price" name="price" value="{{price}}" required="" class="form-control" id="floatingPassword"
+                   >
+                <label for="floatingprice">Price</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="stock" name="stock" required="" value="{{stock}}" class="form-control" id="floatingPassword"
+               >
+                <label for="floatingprice">Stock</label>
+            </div>
+            <div class="form-floating mb-3 ">
+                <select class="form-select" id="floatingSelect" name="category"  type="category"
+                    aria-label="Floating label select example">
+                    <option  >{{category}}</option>
+                    {{#each categorys}} {{#if categoryStatus}} <option value="{{category}}" require="">{{name}}</option>{{/if}}{{/each}}
+
+
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="formFileSm" class="form-label">Add product image</label>
+                <input multiple  class="form-control form-control-sm" id="formFileSm" value="{{image}}" type="file" name="image"
+                    require="">
+            
+             <div class="card-body p-5 "> 
+                  <h6 class="mb-">Product Images</h6>
+                <img class="mb-1" src="/productimage/{{image.[0]}}" style="width: 150px;" alt="">
+                <img class="mb-1" src="/productimage/{{image.[1]}}" style="width: 150px;" alt="">
+                <img src="/productimage/{{image.[2]}}" style="width: 150px;" alt="">
+                <img src="/productimage/{{image.[3]}}" style="width: 150px;" alt="">
+                </div>
+                
+
+            <div class="form-floating">
+              <input type="text" name="description" required="" value="{{description}}" class="form-control" id="floatingPassword" 
+                >
+                <label for="floatingTextarea">Description</label>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-info m-2">
+                Edit Product
+            </button>
+    </div>
+    </form>
+</div>

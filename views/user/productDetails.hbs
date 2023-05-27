@@ -1,0 +1,179 @@
+<!-- Header part end-->
+
+<!-- breadcrumb start-->
+ <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+<!--================End Home Banner Area =================-->
+
+<!--================Single Product Area =================-->
+<div class="product_image_area section_padding">
+  <div class="container">
+    <div class="row s_product_inner justify-content-between">
+      {{#each product}}
+      {{#if status}}
+      <div class="col-lg-7 col-xl-7">
+        <div class="product_slider_img">
+          
+          <div id="vertical">
+            <div data-thumb="/productimage/{{image.[0]}}">
+             <div id="img-container" style="width: 500px">
+              <img src="/productimage/{{image.[0]}}" />
+             </div>
+            </div>
+            <div data-thumb="/productimage/{{image.[1]}}">
+              <div id="img-container" style="width: 500px">
+              <img src="/productimage/{{image.[1]}}" />
+              </div>
+            </div>
+            <div data-thumb="/productimage/{{image.[2]}}">
+              <div id="img-container" style="width: 500px">
+              <img src="/productimage/{{image.[2]}}" />
+            </div>
+            </div>
+            <div data-thumb="/productimage/{{image.[3]}}">
+              <div id="img-container" style="width: 500px">
+              <img src="/productimage/{{image.[3]}}" />
+            </div>
+            </div>
+            <div data-thumb="/productimage/{{image.[4]}}">
+              <div id="img-container" style="width: 500px">
+              <img src="/productimage/{{image.[4]}}" />
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-lg-5 col-xl-4">
+        <div class="s_product_text">
+
+          <h3>{{name}}</h3>
+          <h2>&#8377;{{price}}</h2>
+          <ul class="list">
+            <li>
+              <a class="active" href="#">
+                <span>Category</span> :{{category}}</a>
+            </li>
+            <li>
+              <a href="#"> <span>Availibility</span> : In Stock</a>
+            </li>
+          </ul>
+          <p>
+            {{description}}
+          </p>
+          <div class="card_area d-flex justify-content-between align-items-center">
+            <a onclick="addToCart('{{_id}}')" class="btn_3">add to cart</a>
+            <a onclick="addToWishlist('{{_id}}')" class="like_us"> <i class="fas fa-heart"></i> </a>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+<!--================End Single Product Area =================-->
+
+
+<!-- product_list part start-->
+
+<!-- jquery plugins here-->
+<!-- jquery -->
+<script src="js/jquery-1.12.1.min.js"></script>
+<!-- popper js -->
+<script src="js/popper.min.js"></script>
+<!-- bootstrap js -->
+<script src="js/bootstrap.min.js"></script>
+<!-- easing js -->
+<script src="js/jquery.magnific-popup.js"></script>
+<!-- swiper js -->
+<script src="js/lightslider.min.js"></script>
+<!-- swiper js -->
+<script src="js/masonry.pkgd.js"></script>
+<!-- particles js -->
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<!-- slick js -->
+<script src="js/slick.min.js"></script>
+<script src="js/swiper.jquery.js"></script>
+<script src="js/jquery.counterup.min.js"></script>
+<script src="js/waypoints.min.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/jquery.form.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/mail-script.js"></script>
+<script src="js/stellar.js"></script>
+<!-- custom js -->
+<script src="js/theme.js"></script>
+<script src="js/custom.js"></script>
+<script>
+var options = {
+    width: 400,
+    zoomWidth: 500,
+    offset: {vertical: 0, horizontal: 10}
+};
+new ImageZoom(document.getElementById("img-container"), options);
+ 
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function addToCart(productId) {
+    $.ajax({
+      url: '/addtocart?id=' + productId,
+      type: 'get',
+      data: {
+        productId
+      },
+      success: (res) => {
+        if (res.message == "success") {
+          Swal.fire({
+           
+            icon: 'success',
+            title:  'The product is added to cart!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+
+        }
+      }, error: (err) => {
+        console.log("error in addtocart ajax" + err);
+      }
+
+    })
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function addToWishlist(productId) {
+    $.ajax({
+      url: "/addWishlist?id=" + productId,
+      type: 'get',
+      data: {
+        productId
+      },
+      success: (res) => {
+        if (res.message == "success") {
+          Swal.fire({
+            icon: 'success',
+            title:  'The product is added to wishlist!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          Swal.fire(
+            'Warning',
+            'rejected'
+          );
+        }
+      },
+      error: () => {
+        Swal.fire(
+          'Error',
+          'An error occurred while adding to wishlist'
+        );
+      }
+    });
+  }
+</script>

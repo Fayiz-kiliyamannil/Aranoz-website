@@ -1,0 +1,154 @@
+
+
+{{!-- ============================================================================================================== --}}
+
+<div class="container border pt-5 mt-2">
+
+    <div class="container">
+        <div class="d-flex flex-row justify-content-between order-details pt-5 p-4">
+            <div>
+                <span class="d-block fs-12">Order date</span>
+                <span class="font-weight-bold">{{orderDetails.orderdate}}</span>
+            </div>
+            <div>
+                <span class="d-block fs-12">Order number</span>
+                <span class="font-weight-bold">orderId:{{orderDetails._id}}</span>
+            </div>
+            <div>
+                <span class="d-block fs-12">Payment method</span>
+                <span class="font-weight-bold">{{orderDetails.paymentmethod}}</span>
+            </div>
+
+            <div>
+                <span class="d-block fs-12">Order status</span>
+                <span style="color: red;" class="font-weight-bold">{{orderDetails.status}}</span>
+                <br>
+                {{#if (eq orderDetails.status "success")}}
+               <a onclick="orderdelivered('{{orderDetails._id}}')"><button class="btn btn-success">Delivered</button></a>
+                {{/if}}
+                {{#if (eq orderDetails.status "return request processing")}}
+                <a onclick="returnconformation('{{orderDetails._id}}')" ><button class="btn btn-danger">proceed</button></a>
+                {{/if}}
+                {{#if (eq orderDetails.status "return request success")}}
+                 <a onclick="refund('{{orderDetails._id}}')" ><button class="btn btn-danger">Refund</button></a>
+                 {{/if}}
+            </div>
+
+            <div>
+                <span class="d-block fs-12">Shipping Address</span>
+                <span class="font-weight-bold">{{orderDetails.deliveryaddress.address}}</span><br>
+                <span class="font-weight-bold">{{orderDetails.deliveryaddress.district}},</span>
+                <span class="font-weight-bold">{{orderDetails.deliveryaddress.state}}</span><br>
+                <span class="font-weight-bold">{{orderDetails.deliveryaddress.pincode}}</span><br>
+                <span class="font-weight-bold">MOB:{{orderDetails.deliveryaddress.phone}}</span>
+                <span class="font-weight-bold">{{orderDetails.address.mobile}}</span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="align-middle">
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                 {{#each orderDetails.product}}
+                    <tr>
+                        <td><img style="width: 100px;" src="/productimage/{{image.[0]}}"></td>
+                        <td>{{name}}</td>
+                        <td>₹ {{price}}</td>
+                        <td>{{quantity}}</td>
+                        <td>₹ {{price}}</td>
+                    </tr>
+                    {{/each}}
+                    <tr>
+                        <td></td>
+                        <td colspan="3" align="right">Total</td>
+                        <td>₹ {{orderDetails.grandtotal}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  
+  function returnconformation(orderId) {
+   
+    $.ajax({
+      url: '/admin/returnconformation/?id=' + orderId,
+      type: 'get',
+      data: {
+        orderId
+      },
+      success: (res) => {
+        if (res.message == "success") {
+          location.reload();
+
+
+        }
+      }, error: (err) => {
+        console.log("error in addtocart ajax" + err);
+      }
+
+    })
+  }
+</script>
+<script>
+  
+  function orderdelivered(orderId) {
+    $.ajax({
+      url: '/admin/orderdelivered?id=' + orderId,
+      type: 'get',
+      data: {
+        orderId
+      },
+      success: (res) => {
+        if (res.message == "success") {
+          location.reload();
+
+
+        }
+      }, error: (err) => {
+        console.log("error in addtocart ajax" + err);
+      }
+
+    })
+  }
+</script>
+<script>
+  function refund(orderId){
+    
+     $.ajax({
+      url: '/admin/refundcomplete?id='+ orderId,
+      type: 'get',
+      data: {
+        orderId
+      },
+      success: (res) => {
+        if (res.message == "success") {
+          location.reload();
+
+
+        }
+      }, error: (err) => {
+        console.log("error in addtocart ajax" + err);
+      }
+
+    })
+
+
+  }
+</script>

@@ -1,0 +1,44 @@
+ <div class="col-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Product List</h6>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">price</th>
+                                            <th scope="col">Stock</th>
+                                            <th scope="col">Action</th>
+                                            <th scope="col">Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each products}}
+                                        
+                                        <tr>
+                                            <th scope="row">{{@ index}}</th>
+                                            <td><img style="width:70px; height:70px;" src="/productimage/{{image.[0]}}" alt=""></td>
+                                            <td>{{name}}</td>
+                                            <td>{{category}}</td>
+                                                <td> &#8377; {{price}}</td>
+                                            <td>{{stock}}</td>
+                                             {{#if status}}
+                                         <td><a href="/admin/productunlist?id={{_id}}"><button type="button" class="btn btn-danger">Unlist</button></a></td>
+                                         {{else}}
+                                          <td><a href="/admin/productlist?id={{_id}}"><button type="button" class="btn btn-success">list</button></a></td>
+                                        {{/if}}
+                                          <td><a href="/admin/productEdit?id={{_id}}"><button type="button" class="btn btn-success">Edit</button></a></td>
+                                          
+                                        </tr>
+                                      
+                                      {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>

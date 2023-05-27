@@ -1,0 +1,33 @@
+{
+  "name": "first-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node app",
+    "dev": "nodemon app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "connect-mongo": "^5.0.0",
+    "dotenv": "^16.0.3",
+    "exceljs": "^4.3.0",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.6",
+    "express-session": "^1.17.3",
+    "hbs": "^4.2.0",
+    "js-image-zoom": "^0.7.0",
+    "mongoose": "^6.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nocache": "^3.0.4",
+    "nodemailer": "^6.9.1",
+    "razorpay": "^2.8.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

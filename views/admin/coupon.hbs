@@ -1,0 +1,21 @@
+ 
+          <div class="row">
+    {{#each couponData}}
+    <div class="col-md-4 mb-3 pt-4">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{couponName}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{couponCode}}</h6>
+                <p class="card-text">discountValue: {{discountValue}}</p>
+                <p class="card-text">maxAmountLimit :{{maxAmountLimit}}</p>
+                <p class="card-text">minPurchase: {{minPurchase}}</p>
+                <p class="card-text">startingDate: {{startingDate}}</p>
+                <p class="card-text">endingDate: {{endingDate}}</p>
+                <a href="#" class="card-link">Remove</a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+   
+

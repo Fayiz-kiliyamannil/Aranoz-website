@@ -1,0 +1,86 @@
+<div
+  class="container height-100 d-flex justify-content-center align-items-center"
+>
+  <div class="position-relative">
+    <div class="card p-2 text-center">
+      <h6>Please enter the one time password <br /> to verify your account</h6>
+      <div>
+        <span>A code has been sent to</span>
+        <small>*******9897</small>
+      </div>
+      <form action="/login" method="post">
+        <div
+          id="otp"
+          class="inputs d-flex flex-row justify-content-center mt-2"
+        >
+          <input
+            class="m-2 text-center form-control rounded"
+            type="text"
+            id="first"
+            maxlength="1"
+            value=""
+            name="first"
+          />
+          <input
+            class="m-2 text-center form-control rounded"
+            type="text"
+            id="second"
+            maxlength="1"
+            value=""
+            name="second"
+          />
+          <input
+            class="m-2 text-center form-control rounded"
+            type="text"
+            id="third"
+            maxlength="1"
+            value=""
+            name="third"
+          />
+          <input
+            class="m-2 text-center form-control rounded"
+            type="text"
+            id="fourth"
+            maxlength="1"
+            value=""
+            name="fourth"
+          />
+          <input
+            class="m-2 text-center form-control rounded"
+            type="text"
+            id="fifth"
+            maxlength="1"
+            value=""
+            name="fifth"
+          />
+          <input
+            class="m-2 text-center form-control rounded"
+            type="text"
+            id="sixth"
+            maxlength="1"
+            value=""
+            name="sixth"
+          />
+        </div>
+         <h6 class="invalied" style="color: red;" >{{this.message}}</h6>
+        
+        <div class="mt-4">
+          <button
+            type="submit"
+            value="submit"
+            class="btn_3"
+          >varification</button>
+        </div>
+      </form>
+    </div>
+     
+    <div class="card-2">
+      <div class="content d-flex justify-content-center align-items-center">
+        <span>Didn't get the code-</span>
+        <a href="/otp" class="text-decoration-none ms-3"> Resend</a>
+       
+       
+      </div>
+    </div>
+  </div>
+</div>

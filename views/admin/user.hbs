@@ -1,0 +1,37 @@
+ 
+ 
+ <div class="col-sm-12 col-xl-12" >
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Accented Table</h6>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone No</th>
+                                        <th scope="col">Action</th>
+                                    
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each registration}}
+                                    <tr>
+                                        <th scope="row">{{@index}}</th>
+                                        <td>{{name}}</td>
+                                        <td>{{email}}</td>
+                                        <td>{{phone}}</td>
+                                         {{#if is_admin}}
+                                         <td><a href="/admin/unblock?id={{_id}}"><button type="button" class="btn btn-success">Unblock</button></a></td>
+                                         {{else}}
+                                          <td><a href="/admin/block?id={{_id}}"><button type="button" class="btn btn-danger">Block</button></a></td>
+                                        {{/if}}
+                                        {{!-- <td><a href=""><button type="button" class="btn btn-primary">views</button></a><td> --}}
+                                    </tr>
+                                   {{/each}}
+                                   </tbody>
+    </table>
+  </div>
+
+</div>

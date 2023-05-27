@@ -1,0 +1,404 @@
+<!--::header part start::-->
+
+
+<style>
+    #shipping-info {
+        display: none;
+    }
+</style>
+<section class="checkout_area padding_top">
+    <div class="container">
+
+        <div class="cupon_area">
+            <div class="check_title">
+                <h2>
+                    Have a coupon?
+                    {{!-- <a href="#">Click here to enter your code</a> --}}
+
+                </h2>
+                <form action="/coupon" method="post">
+                    <input type="text" name="coupon"  value="" placeholder="Enter coupon code" />
+                    {{#if (eq coupon '0')}}
+                    <button class="tp_btn" type="submit">Apply Coupon</button>
+                    {{/if}}
+                </form>
+                {{#if coupon}}
+                <a href="/removecoupon" > <button class="tp_btn">Remove Coupon</button></a>
+                {{/if}}
+                 <h6 class="varify" style="color: #ed0909;padding-top:10px">{{couponError}}</h6>
+            </div>
+        </div>
+        <div class="billing_details ">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Billing Details</h3>
+                    <form id="checkout-form" class="row contact_form"  novalidate="novalidate">
+                        <div class="col-md-6 form-group p_star">
+                            <label class="labels">Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="Name" value="{{userName}}"
+                                required="">
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <label class="labels">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{email}}" placeholder="Email">
+                        </div>
+                      
+
+                        <div class="col-md-6 form-group p_star">
+                            <label class="labels">Phone</label>
+                            <input type="tel" name="phone" class="form-control" required="" value="" placeholder="Phone no:">
+                        </div>
+
+
+                        <div class="col-md-12 form-group p_star">
+                            <label class="labels">Address</label>
+                            <input type="text" name="address" class="form-control" required="" value="" placeholder="Address">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="labels">Address-2</label>
+                            <input type="text" class="form-control" name="area" placeholder="eg: Near to" required=""
+                                value="">
+                        </div>
+
+                        <div class="col-md-12 form-group p_star">
+                            <label class="labels">District</label>
+                            <input type="text" name="district" class="form-control" required="" value="" placeholder="District">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="labels">Pincode</label>
+                            <input type="text" maxlength="6" class="form-control"  name="pincode"
+                                placeholder="Postcode" required="" value="">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="labels">State</label>
+                            <input type="text" name="state" class="form-control" required value="" placeholder="State">
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="labels">Country</label>
+                            <input type="text" name="country" class="form-control" required value="" placeholder="Country">
+                        </div>
+                     
+                        <div class="col-md-12 form-group">
+                            <div class="creat_account">
+                                <h3>Select Address</h3>
+                                {{#each showAddress}}
+                                <input class="addressInput" type="radio"  id="{{_id}}" name="address" value="{{name}},{{address}},{{state}},{{country}},{{area}},{{surname}},{{phone}},{{pincode}},{{district}}" />
+                                <label>{{name}}</label>
+                                <label>{{address}}</label>
+                                <label>{{state}}</label>
+                                <span id="shipping-info">
+                                    <label>{{country}}</label>
+                                    <label>{{area}}</label>
+                                    <label>{{surname}}</label>
+                                    <label>{{phone}}</label>
+                                    <label>{{pincode}}</label>
+                                    <label>{{district}}</label>
+                                </span>
+                                .....
+                                <br>
+                                {{/each}}
+
+                            </div>
+                        </div>
+
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li>
+                                <a>Product
+                                    <span>Total</span>
+                                </a>
+                            </li>
+                            {{#each checkOutQuantityPriceData}}
+                            <li>
+                                <a id="nam">{{name}}
+
+                                    <span class="middle">x {{quantity}}</span>
+                                    <span class="last">₹ {{totalPrice}}</span>
+                                </a>
+                            </li>
+                            {{/each}}
+
+                        </ul>
+                        <ul class="list list_2">
+                            <li>
+
+                                <a>Subtotal
+                                    <span>₹ {{subTotal}}</span>
+
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">Coupon Discount
+                                    <span>Flat rate: ₹ {{discountValue}}.00</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a>total
+                                    <span>₹ {{grandtotal}}.00</span>
+                                </a>
+                            </li>
+                        </ul>
+                        {{#if (eq grandtotal 0)}}
+                          <input type="hidden" id="f-option5" name="coupon" value="coupon"/>
+                        {{else}}
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option5" name="selector" value="cod" />
+                                <label for="f-option5">Cash on Delivery (COD)</label>
+                                <div class="check"></div>
+                            </div>
+
+                        </div>
+                        <div class="payment_item active">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option6" required name="selector" value="online" />
+                                <label for="f-option6">Paypal </label>
+                                <img src="img/product/single-product/card.jpg" alt="" />
+                                <div class="check"></div>
+                            </div>
+
+                        </div>
+                        <div class="payment_item active">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option7" name="selector" required="" value="wallet" />
+                                <label for="f-option7">Wallet </label>
+                                <div class="check"></div>
+                            </div>
+
+                        </div>
+                        {{/if}}
+                        {{!-- <div class="creat_account">
+                            <input type="checkbox" id="f-option4" required="" name="selector" />
+                            <label for="f-option4">I’ve read and accept the </label>
+                            <a href="#">terms & conditions*</a>
+                        </div> --}}
+                        <div class="mt-5 text-center">
+                            <button type="submit" id="myElement" class="btn btn-primary profile-button">PLACE
+
+                                ORDER</button>
+                        </div>
+                        <h6  class="walletLow" style="color: #ed0909; padding-left:50px;padding-top:20px" ></h6>
+                        {{!-- <a onclick="btn()"> click</a> --}}
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    
+const addressInputs = document.querySelectorAll('.addressInput');
+
+// Add event listener to each radio button
+addressInputs.forEach(function(input) {
+  input.addEventListener('click', function() {
+  $(document).ready(function() {
+  $(".addressInput").change(function() {
+    if ($(this).is(":checked")) {
+      const [name, address, state, country,  area, surname, phone, pincode, district ] = $(this).val().split(",");
+      $('[name="name"]').val(name || '');
+      $('[name="address"]').val(address || '');
+      $('[name="state"]').val(state || '');
+      $('[name="country"]').val(country || '');
+      $('[name="district"]').val(district || '');
+      $('[name="area"]').val(area || '');
+      $('[name="surname"]').val(surname || '');
+      $('[name="phone"]').val(phone || '');
+      $('[name="pincode"]').val(pincode || '');
+    }
+  });
+});
+  });
+});
+
+
+
+</script>
+
+
+<script>
+    const form = document.getElementById("checkout-form");
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  // Get form inputs
+  const nameInput = form.querySelector('input[name="name"]');
+  const emailInput = form.querySelector('input[name="email"]');
+  const phoneInput = form.querySelector('input[name="phone"]');
+  const addressInput = form.querySelector('input[name="address"]');
+  const districtInput = form.querySelector('input[name="district"]');
+  const pincodeInput = form.querySelector('input[name="pincode"]');
+  const stateInput = form.querySelector('input[name="state"]');
+  const countryInput = form.querySelector('input[name="country"]');
+  const selectorInputs = form.querySelectorAll('input[name="selector"]');
+
+  // Validate inputs
+  let valid = true;
+
+  if (nameInput.value === "") {
+    nameInput.classList.add("is-invalid");
+    valid = false;
+  } else {
+    nameInput.classList.remove("is-invalid");
+  }
+
+  if (emailInput.value === "") {
+    emailInput.classList.add("is-invalid");
+    valid = false;
+  } else {
+    emailInput.classList.remove("is-invalid");
+  }
+
+  if (phoneInput.value === "") {
+    phoneInput.classList.add("is-invalid");
+    valid = false;
+  } else {
+    phoneInput.classList.remove("is-invalid");
+  }
+
+  if (addressInput.value === "") {
+    addressInput.classList.add("is-invalid");
+    valid = false;
+  } else {
+    addressInput.classList.remove("is-invalid");
+  }
+
+  if (districtInput.value === "") {
+    districtInput.classList.add("is-invalid");
+    valid = false;
+  } else {
+    districtInput.classList.remove("is-invalid");
+  }
+
+  
+
+  if (stateInput.value === "") {
+    stateInput.classList.add("is-invalid");
+    valid = false;
+  } else {
+    stateInput.classList.remove("is-invalid");
+  }
+
+  if (countryInput.value === "") {
+    countryInput.classList.add("is-invalid");
+    valid = false;
+  } else {
+    countryInput.classList.remove("is-invalid");
+  }
+
+  // Validate selector inputs (at least one must be checked)
+  let selectorValid = false;
+  for (let i = 0; i < selectorInputs.length; i++) {
+    if (selectorInputs[i].checked) {
+      selectorValid = true;
+      break;
+    }
+  }
+
+  if (!selectorValid) {
+    const paymentItem = document.querySelector(".payment_item");
+    paymentItem.classList.add("is-invalid");
+    valid = false;
+  } else {
+    const paymentItem = document.querySelector(".payment_item");
+    paymentItem.classList.remove("is-invalid");
+  }
+
+  // Submit form if valid
+  if (valid) {
+    form.submit();
+  }
+});
+
+</script>
+
+
+<script>
+
+   $("#checkout-form").submit((e) => {
+    e.preventDefault();
+    $.ajax({
+        url: "/delivery",
+        method: "post",
+        data: $('#checkout-form').serialize(),
+        success: (response) => {
+            console.log(response);
+            if (response.codSuccess) {
+                location.href = "/delivery";
+            } else if (response.walletSuccess) {
+                location.href = "/delivery";
+            } else if (response.walletLow) {
+                $('.walletLow').text("Insufficient balance in wallet");
+            } else {
+                razorpayPayment(response);
+            }
+        }
+    });
+});
+
+    function razorpayPayment(order) {
+        console.log("amount " + order.order.amount)
+        var options = {
+            "key": "rzp_test_aDm2Dw6VyDdjk3", // Enter the Key ID generated from the Dashboard
+            "amount": order.order.amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Acme Corp",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+
+                verifyPayment(response);
+            },
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9000090000"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+
+    function verifyPayment(payment) {
+        console.log("payment " + payment)
+        $.ajax({
+            url: '/varify-payment',
+            data: {
+                payment,
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    location.href = "/delivery";
+                }
+            }
+        })
+    }
+
+</script>
+
+
+
+
+
+
+
+

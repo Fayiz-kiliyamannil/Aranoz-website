@@ -1,0 +1,190 @@
+<!--================Cart Area =================-->
+<section class="cart_area padding_top">
+  <div class="container">
+    <div class="cart_inner">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+
+            </tr>
+          </thead>
+          {{#each cartDataList}}
+          <tbody>
+            <tr>
+              <td>
+                <div class="media">
+                  <div class="d-flex">
+                    <button type="button" onclick="remove('{{_id}}')" class="btn btn-light">Remove</button>
+                    <img style="height: 6rem; width:6rem;" src="/productimage/{{image.[0]}}" alt="" />
+                  </div>
+                  <div class="media-body">
+                    <p>{{name}}</p>
+                    <h5 style="color: red;" id="{{_id}}outOfStock"></h5>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <h5>₹ {{price}}</h5>
+              </td>
+              <td>
+                <div class="product_count">
+
+                  <button class="btn-minus" onclick="updateQuantity('decrement', '{{_id}}','{{stock}}')">-</i></button>
+                  <span class="quantity" data-id="{{_id}}">{{quantity}}</span>
+                  <button class="btn-plus" onclick="updateQuantity('increment', '{{_id}}','{{stock}}')">+</i></button>
+
+                </div>
+              </td>
+              <td>
+                <h5 id="{{_id}}totalprice">{{totalPrice}}</h5>
+              </td>
+
+            </tr>
+            {{/each}}
+          
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <h5> Subtotal</h5>
+                <i class="fas fa-rupee-sign"></i>
+              </td>
+              <td>
+                <br>
+                <h5 id="subtotal">{{subTotal}}</h5>
+
+              </td>
+            </tr>
+           
+                 
+                  
+        </table>
+        <div class="checkout_btn_inner float-right">
+          <a class="btn_1" href="#">Continue Shopping</a>
+          <a class="btn_1 checkout_btn_1" href="/checkOut">Proceed to checkout</a>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+  function updateQuantity(operation, productId, stock) {
+    const quantityElem = document.querySelector(`.quantity[data-id="${productId}"]`);
+    let quantity = parseInt(quantityElem.innerText);
+
+    if (operation === 'increment' && quantity <= stock) {
+      quantity++;
+    } else if (operation === 'decrement' && quantity > 1) {
+      quantity--;
+    }
+
+    updateQuantityAjax(quantity, productId, stock);
+    quantityElem.innerText = quantity;
+  }
+
+
+
+</script>
+<script>
+  function updateQuantityAjax(count, productId, stock) {
+    $.ajax({
+      url: '/updateQuantity?id=' + productId,
+      data: {
+        products: productId,
+        count: count,
+        stock
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.message == "success") {
+          $('#' + productId + 'totalprice').html(response.totalPrice);
+          $('#subtotal').html(response.subTotal);
+          $('#grandtotal').html(response.grandtotal);
+          $(`#${productId}outOfStock`).html(response.noData)
+
+        }
+        else {
+
+          console.log("out of stock jsomn")
+          $(`#${productId}outOfStock`).html(response.message)
+
+        }
+      }
+    })
+  }
+</script>
+
+
+<!-- Include SweetAlert JavaScript and CSS files from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
+<!-- Your JavaScript code that uses the SweetAlert function -->
+<script>
+  function remove(productId) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You want to remove the product",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'cancel',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "/remove?id=" + productId,
+          type: "get",
+          data: {
+            productId,
+          },
+          dataType: "html",
+          success: function () {
+            swalWithBootstrapButtons.fire(
+
+            ),
+
+              location.reload();
+
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            swalWithBootstrapButtons.fire(
+              'Error deleting!',
+              'Please try again',
+              'error'
+            )
+          }
+        })
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
+</script>
+
+
+<!--================End Cart Area =================-->

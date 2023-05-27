@@ -1,0 +1,44 @@
+<div class="col-sm-6 col-xl-6">
+    <div class="bg-transprant rounded h-100 p-4">
+        <h6 class="mb-4">Add products</h6>
+        <form method="post" action="/admin/products" enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+                <input type="name" name="name" class="form-control" id="floatingInput" placeholder="name">
+                <label for="floatingInput">product Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="price" name="price" required="" class="form-control" id="floatingPassword"
+                    placeholder="price">
+                <label for="floatingprice">&#8377; Price</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="stock" name="stock" required="" class="form-control" id="floatingPassword"
+                    placeholder="stock">
+                <label for="floatingprice">Stock</label>
+            </div>
+            <div class="form-floating mb-3 ">
+                <select class="form-select" id="floatingSelect" name="category" type="category"
+                    aria-label="Floating label select example">
+                    <option selected>Category Menu</option>
+                    {{#each categorys}} {{#if categoryStatus}} <option require="">{{name}}</option>{{/if}}{{/each}}
+
+
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="formFileSm" class="form-label">Add Product Image</label>
+                <input multiple class="form-control form-control-sm" id="formFileSm" type="file" name="image"
+                    require="">
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" name="description" required="" placeholder="Leave a note here"
+                    id="floatingTextarea" style="height: 150px;"></textarea>
+                <label for="floatingTextarea">Description</label>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-info m-2">
+                Add Product
+            </button>
+    </div>
+    </form>
+</div>

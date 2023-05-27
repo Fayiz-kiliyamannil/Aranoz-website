@@ -1,0 +1,74 @@
+{{!-- {{#each orderDetails}}
+<div class="card w-100">
+  <div class="card-body">
+    <h5 class="card-title"> {{_id}}</h5>
+    <p class="card-text">Address:<span>{{deliveryaddress.name}} </span></p>
+    <a href="#" class="btn btn-primary">Button</a>
+  </div>
+</div>
+{{/each}} --}}
+
+
+<div class="content-page">
+  <div class="table-title">
+    <div class="row">
+      <div class="col-sm-10">
+        <h4>Order <b>Details</b></h4>
+      </div>
+      <div class="col-sm-2">
+        <!-- <button type="button" class="btn btn-info add-new btn-sm m-2"><i class="fa fa-plus"></i><a
+            style="color:white" href="/addproductpage">Add New</a></button> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div style="overflow-y: scroll;">
+          <table id="datatable" class="table data-table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Ordered User</th>
+                <th>Delivery Address</th>
+                <th>Ordered Date</th>
+                <th>Payment Method</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                {{!-- <th>Product Detail</th> --}}
+                <!-- <th>Price</th> -->
+                <th>Action</th> 
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Start of orderDetails loop -->
+              {{#each orderDetails}}
+              <tr>
+                <td id="id">Name: {{deliveryaddress.name}} <br> Id:<span>{{_id}}</span></td>
+                <td>
+                {{deliveryaddress.address}},{{deliveryaddress.district}},{{deliveryaddress.pincode}}<br>
+                {{deliveryaddress.state}},{{deliveryaddress.country}}
+                </td>
+                <td>{{orderdate}}</td>
+                <td>{{paymentmethod}}</td>
+                <td>{{grandtotal}}</td>
+                <td style="color:red;">{{status}}</td>
+                <td>  
+                  <!-- if status is Order Processing -->
+                <a href="/admin/orderDetails?id={{_id}}"><button  class="btn btn-success">view</button></a> 
+                </td>
+              </tr>
+              {{/each}}
+              <!-- End of orderDetails loop -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+
+
+</script>

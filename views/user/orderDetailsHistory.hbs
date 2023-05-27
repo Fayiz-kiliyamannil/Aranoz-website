@@ -1,0 +1,204 @@
+<div class="container border pt-5 mt-2">
+
+</div>
+
+<div class="container">
+    <div class="d-flex flex-row justify-content-between  order-details pt-5 p-4">
+        <div><span class="d-block fs-12">Order date</span><span class="font-weight-bold">{{order.orderdate}}</span>
+        </div>
+        <div><span class="d-block fs-12">Order number</span><span class="font-weight-bold">{{order._id}}</span>
+        </div>
+        <div><span class="d-block fs-12">Payment method</span><span class="font-weight-bold">{{order.paymentmethod}}
+            </span></div>
+
+        <div><span class="d-block fs-12">Order status</span><span style="color: red;"
+                class="font-weight-bold">{{order.status}}
+            </span>
+
+            {{#if (eq order.status "delivered")}}
+            <a onclick="returnorder('{{order._id}}')"><span
+                    class="d-block fs-12 btn btn-primary mt-3">Return</span></a>
+            {{/if}}
+            {{#if (eq order.status "success")}}
+            
+            <a onclick="cancelorder('{{order._id}}')"><span class="d-block fs-12 btn btn-primary mt-3">Cancel
+                    Order</span></a>
+            {{/if}}
+
+
+    
+        </div>
+
+        <div><span class="d-block fs-12">Shipping Address</span><span
+                class="font-weight-bold ">{{order.deliveryaddress.address}}</span><br>
+            <span class="font-weight-bold ">{{order.deliveryaddress.district}},</span>
+            <span class="font-weight-bold ">{{order.deliveryaddress.state}}</span><br>
+            <span class="font-weight-bold ">{{order.deliveryaddress.pincode}}</span><br>
+            <span class="font-weight-bold">MOB:{{order.deliveryaddress.phone}}</span>
+            <span class="font-weight-bold ">{{orderDetails.address.mobile}}</span>
+            </d iv>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table  table-hover">
+            <thead class="align-middle">
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Product Name</th>
+                    {{!-- <th scope="col">Brand</th> --}}
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+
+
+
+                </tr>
+            </thead>
+            <tbody class="align-middle">
+                {{!-- {{#each orderDetails.product}} --}}
+                {{#each order.product}}
+                <tr>
+                    <td><img style="width: 100px;" src="/productimage/{{image.[0]}}"></td>
+                    <td>{{name}}</td>
+                    {{!-- <td>{{productId.bname}}</td> --}}
+                    <td>₹ {{price}}</td>
+                    <td>{{quantity}}</td>
+                    <td>₹ {{totalPrice}}</td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+
+        </table>
+        <div class="w-90 d-flex justify-content-end">
+            <div class="" style="margin-right: 6rem;">
+                <span class="" style="font-weight: 600; font-size: 20px;">Total :</span>
+                <span class="" style="font-weight: 600; font-size: 20px;">₹ {{order.grandtotal}}</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+     function cancelorder(orderId) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "Do you want to cancelled the Order ?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'proceed',
+      cancelButtonText: 'cancel ' ,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+            url: '/cancelorder?id=' + orderId,
+            type: 'get',
+            data: {
+                orderId
+            },
+          dataType: "html",
+          success: function () {
+            swalWithBootstrapButtons.fire(
+
+            ),
+
+              location.reload();
+
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            swalWithBootstrapButtons.fire(
+              'Error deleting!',
+              'Please try again',
+              'error'
+            )
+          }
+        })
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
+</script>
+<script>
+     function returnorder(orderId) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "Do you want to returned the Order ?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'proceed',
+      cancelButtonText: 'cancel ' ,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+            url: '/returnorder?id=' + orderId,
+            type: 'get',
+            data: {
+                orderId
+            },
+          dataType: "html",
+          success: function () {
+            swalWithBootstrapButtons.fire(
+
+            ),
+
+              location.reload();
+
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            swalWithBootstrapButtons.fire(
+              'Error deleting!',
+              'Please try again',
+              'error'
+            )
+          }
+        })
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+  }
+</script>

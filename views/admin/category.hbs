@@ -1,0 +1,95 @@
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-12">
+        <div class="bg-light rounded h-100 p-4">
+            <form action="/admin/category" method="post">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Add Category</label>
+                    <input type="name" name="name" required="" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp">
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="varify" style="color: #ed0909;">{{this.message}}</h6>
+                            <h6 class="mb-4">Category Menu</h6>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">category Name</th>
+                                        <th scope="col">Action</th>
+
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {{#each categorys}}
+
+                                    <tr>
+                                        <th scope="row">{{@index}}</th>
+                                        <td>{{name}}</td>
+
+                                        {{#if categoryStatus}}
+                                        <td><a><button onclick="unlist('{{_id}}')" type="button"
+                                                    class="btn btn-danger">Unlist</button></a></td>
+                                        {{else}}
+                                        <td><a><button onclick="list('{{_id}}')" type="button"
+                                                    class="btn btn-success">list</button></a></td>
+                                        {{/if}}
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+    function unlist(proId) {
+        event.preventDefault();
+
+        $.ajax({
+
+            url: '/admin/unlist',
+            data: { product: proId },
+            method: 'get',
+            success: (response) => {
+                if (response) {
+                    location.reload()
+                }
+            },
+            error: (error) => {
+                alert('error');
+            }
+        });
+    }
+
+    function list(proId) {
+        event.preventDefault();
+
+        $.ajax({
+
+            url: '/admin/list',
+            data: { product: proId },
+            method: 'get',
+            success: (response) => {
+                if (response) {
+                    location.reload()
+                }
+            },
+            error: (error) => {
+                alert('error');
+            }
+        });
+    }
+</script>

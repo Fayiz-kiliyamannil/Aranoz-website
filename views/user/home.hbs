@@ -1,0 +1,213 @@
+<!-- banner part start-->
+<section class="banner_part">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <div class="banner_slider owl-carousel">
+          {{#each banner}}
+          {{#if status}}
+          <div class="single_banner_slider">
+            <div class="row">
+              <div class="col-lg-5 col-md-8">
+                <div class="banner_text">
+                  <div class="banner_text_iner">
+                    <h1>{{name}}</h1>
+                    <p>{{description}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="banner_img d-none d-lg-block w-50">
+                <img src="productimage/{{image.[0]}}" alt="">
+              </div>
+            </div>
+          </div>
+          {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<!-- banner part start-->
+<!-- feature_part start-->
+<section class="feature_part">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="section_tittle text-center">
+          <br>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-between">
+      <div class="col-lg-7 col-sm-6">
+        <div class="single_feature_post_text">
+          <p>Premium Quality</p>
+          <h3>Latest foam Sofa</h3>
+          <a href="/shop" class="feature_btn">EXPLORE NOW
+            <i class="fas fa-play"></i></a>
+          <img src="img/feature/feature_1.png" alt="" />
+        </div>
+      </div>
+      <div class="col-lg-5 col-sm-6">
+        <div class="single_feature_post_text">
+          <p>Premium Quality</p>
+          <h3>Latest foam Sofa</h3>
+          <a href="/shop" class="feature_btn">EXPLORE NOW
+            <i class="fas fa-play"></i></a>
+          <img src="img/feature/feature_2.png" alt="" />
+        </div>
+      </div>
+      <div class="col-lg-5 col-sm-6">
+        <div class="single_feature_post_text">
+          <p>Premium Quality</p>
+          <h3>Latest foam Sofa</h3>
+          <a href="/shop" class="feature_btn">EXPLORE NOW
+            <i class="fas fa-play"></i></a>
+          <img src="img/feature/feature_3.png" alt="" />
+        </div>
+      </div>
+      <div class="col-lg-7 col-sm-6">
+        <div class="single_feature_post_text">
+          <p>Premium Quality</p>
+          <h3>Latest foam Sofa</h3>
+          <a href="/shop" class="feature_btn">EXPLORE NOW
+            <i class="fas fa-play"></i></a>
+          <img src="img/feature/feature_4.png" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- upcoming_event part start-->
+
+<!-- product_list start-->
+<section class="product_list section_padding">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <div class="section_tittle text-center">
+          <h2>awesome <span>shop</span></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="product_list_slider owl-carousel">
+          <div class="single_product_list_slider">
+            <div class="row align-items-center justify-content-between">
+              {{#each product}}
+              {{#if status}}
+              <div class="col-lg-3 col-sm-6" id="myTable">
+                <div class="single_product_item">
+                  <a href="/productDetails?id={{_id}}">
+                    <img src="/productimage/{{image.[0]}}" alt=""></a>
+                  <div class="single_product_text">
+                    <h4>{{name}}</h4>
+                    <h3>&#8377;{{price}}</h3>
+                    <a onclick="addToCart('{{_id}}')" class="add_cart">+ add to cart
+                      <i style="color: red;" class="fa fa-heart"></i>
+                  </div>
+                  </a>
+                </div>
+              </div>
+              {{/if}}
+              {{/each}}
+              <div class="col-lg-12">
+                <div class="pageination">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <i class="ti-angle-double-left"></i>
+                        </a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="/?page=1">1</a></li>
+                      <li class="page-item"><a class="page-link" href="/?page=2">2</a></li>
+                      <li class="page-item"><a class="page-link" href="/?page=3">3</a></li>
+                      <li class="page-item"><a class="page-link" href="/?page=4">4</a></li>
+
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <i class="ti-angle-double-right"></i>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- product_list part start-->
+
+
+
+<!-- subscribe_area part start-->
+
+<!-- subscribe_area part start-->
+
+<!--::subscribe_area part end::-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function addToCart(productId) {
+    $.ajax({
+      url: '/addtocart?id=' + productId,
+      type: 'get',
+      data: {
+        productId
+      },
+      success: (res) => {
+        if (res.message == "success") {
+          Swal.fire({
+           
+            icon: 'success',
+            title:  'The product is added to cart!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+        }
+      }, error: (err) => {
+        console.log("error in addtocart ajax" + err);
+      }
+
+    })
+  }
+</script>
+<script>
+  function myFunction() {
+
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue, rd;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+</script>
