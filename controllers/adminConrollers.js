@@ -27,6 +27,8 @@ const loadadhome = async (req, res) => {
     const orderDate = currentDate.toISOString().split('T')[0];
   //  const todaySales = await adOrder.find({status:'delivered'});
     const countUsers = await registration.countDocuments({});
+    const blockUsers = await registration.countDocuments({is_admin:1});
+    const totalOrders = await adOrder.countDocuments({});
     //===================PAYMENT GRAHE===================================================
     const cod = { paymentmethod: 'cod' }
     const cCod = await adOrder.countDocuments(cod);
@@ -63,17 +65,21 @@ const loadadhome = async (req, res) => {
     const orderData = await adOrder.find(query).lean();
     const grandTotal = await adOrder.aggregate([
       {
+        $match: { status: "delivered" }
+      },
+      {
         $group: {
           _id: 0,
           total: { $sum: "$grandtotal" }
         }
       }
-    ])
+    ]);
+    
 
     const totalRevenue = grandTotal.map(item => item.total);
     res.render("admin/home", {
       admins: true, adminshead: true, dash: true, countUsers,
-      totalRevenue, cCod, cOnline, cWallet, cCancel, cDelivered, cOrdered, cReturn, orderData,to,from
+      totalRevenue, cCod, cOnline, cWallet, cCancel, cDelivered,totalOrders ,cOrdered, cReturn, orderData,to,from,blockUsers
     });
 
   } catch (error) {
