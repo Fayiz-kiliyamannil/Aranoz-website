@@ -20,7 +20,11 @@
                   <div class="single_product_text">
                     <h4>{{name}}</h4>
                     <h3>{{price}}</h3>
+                    {{#if stock}}
                     <a onclick="addToCart('{{_id}}')" class="add_cart">+ add to cart</a>
+                    {{else}}
+                      <P style="color: red;">Out Of Stock</P>
+                      {{/if}}
                     <button onclick="remove('{{_id}}')" class="btn"><i class="fa fa-trash"></i> Remove</button>
 
                   </div>

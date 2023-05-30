@@ -75,11 +75,14 @@
                                 <div class="single_product_text">
                                     <h4>{{name}}</h4>
                                     <h3>&#8377;{{price}}</h3>
+                                    {{#if stock}}
                                     <a onclick="addToCart('{{_id}}')" class="add_cart">+ add to cart
                                         <i style="color:darkgray;" class="fa fa-heart"></i>
+                                          {{else}}
+                                            <P style="color: red;">Out Of Stock</P>
+                                {{/if}}
                                 </div>
                                 </a>
-
                             </div>
                         </div>
 

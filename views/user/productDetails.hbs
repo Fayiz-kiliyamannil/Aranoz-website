@@ -53,14 +53,16 @@
                 <span>Category</span> :{{category}}</a>
             </li>
             <li>
-              <a href="#"> <span>Availibility</span> : In Stock</a>
+              <a href="#"> <span>Availibility</span> :{{#if stock}} In Stock {{else}} <span style="color: red;"> Out Of Stock{{/if}}</span> </a>
             </li>
           </ul>
           <p>
             {{description}}
           </p>
           <div class="card_area d-flex justify-content-between align-items-center">
+            {{#if stock}}
             <a onclick="addToCart('{{_id}}')" class="btn_3">add to cart</a>
+            {{/if}}
             <a onclick="addToWishlist('{{_id}}')" class="like_us"> <i class="fas fa-heart"></i> </a>
           </div>
         </div>

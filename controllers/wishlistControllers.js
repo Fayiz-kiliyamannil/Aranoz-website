@@ -23,6 +23,7 @@ const loadWishList = async (req, res) => {
           name: productId.name,
           price: productId.price,
           image: productId.image,
+          stock:productId.stock,
         }));
   
         res.render('user/wishlist', { users: true, usershead: true, userName, dataWishlist });
