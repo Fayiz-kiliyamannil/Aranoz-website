@@ -74,6 +74,7 @@ const sendVarifyMail = async (name, email, registration_id) => {
 // HOME PAGE PRODUCT ADDED
 const loadpage = async (req, res) => {
   try {
+    userName = req.session.user;
     const page = req.query.page;
     const perPage = 8;
     const showProducts = await adproducts.find({}).lean().skip((page - 1) * perPage).limit(perPage);
@@ -622,8 +623,9 @@ const loadReturnOrder = async (req, res) => {
 //    HERE THE PAGE DESTROY SESSION AND REDIRECT TO HOME
 const userlogout = async (req, res) => {
   try {
+    req.session.user = null;
     req.session.destroy();
-    req.session.userName = 0;
+  
     res.render("user/home", { users: true, usershead: true });
   } catch (error) {
     console.log("error in userlogout " + error.message);
