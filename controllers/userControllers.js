@@ -623,6 +623,7 @@ const loadReturnOrder = async (req, res) => {
 const userlogout = async (req, res) => {
   try {
     req.session.destroy();
+    req.session.userName = 0;
     res.render("user/home", { users: true, usershead: true });
   } catch (error) {
     console.log("error in userlogout " + error.message);
